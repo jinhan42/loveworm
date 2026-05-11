@@ -1,0 +1,45 @@
+{
+  "nav": {
+    "dashboard": "대시보드",
+    "servers": "서버 현황",
+    "heatExchanger": "열교환기",
+    "immersionTank": "이머전 탱크",
+    "pdu": "PDU 전력"
+  },
+  "bmc": {
+    "title": "서버 BMC 모니터링",
+    "cpuTemp": "CPU 온도",
+    "psuPower": "PSU 전력",
+    "psuVoltage": "PSU 전압",
+    "psuCurrent": "PSU 전류",
+    "host": "서버 IP",
+    "lastUpdate": "최근 업데이트"
+  },
+  "heatExchanger": {
+    "title": "열교환기 모니터링",
+    "waterFlow": "물 유량",
+    "oilFlow": "냉각유 유량",
+    "unit": "LPM"
+  },
+  "immersionTank": {
+    "title": "이머전 탱크 모니터링",
+    "tempUpper": "상층 온도",
+    "tempLower": "하층 온도",
+    "oilFlow": "냉각유 흐름",
+    "unitTemp": "°C",
+    "unitFlow": "LPM"
+  },
+  "pdu": {
+    "title": "PDU 전력 모니터링",
+    "totalPower": "전체 전력",
+    "outlet": "아울렛",
+    "unit": "W"
+  },
+  "common": {
+    "loading": "데이터 로딩 중...",
+    "noData": "데이터 없음",
+    "error": "오류 발생",
+    "refresh": "새로고침",
+    "history": "이력 보기"
+  }
+}

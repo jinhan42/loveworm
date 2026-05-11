@@ -1,0 +1,45 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "servers": "Server Status",
+    "heatExchanger": "Heat Exchanger",
+    "immersionTank": "Immersion Tank",
+    "pdu": "PDU Power"
+  },
+  "bmc": {
+    "title": "Server BMC Monitoring",
+    "cpuTemp": "CPU Temperature",
+    "psuPower": "PSU Power",
+    "psuVoltage": "PSU Voltage",
+    "psuCurrent": "PSU Current",
+    "host": "Server IP",
+    "lastUpdate": "Last Update"
+  },
+  "heatExchanger": {
+    "title": "Heat Exchanger Monitoring",
+    "waterFlow": "Water Flow",
+    "oilFlow": "Cooling Oil Flow",
+    "unit": "LPM"
+  },
+  "immersionTank": {
+    "title": "Immersion Tank Monitoring",
+    "tempUpper": "Upper Temperature",
+    "tempLower": "Lower Temperature",
+    "oilFlow": "Oil Flow Rate",
+    "unitTemp": "°C",
+    "unitFlow": "LPM"
+  },
+  "pdu": {
+    "title": "PDU Power Monitoring",
+    "totalPower": "Total Power",
+    "outlet": "Outlet",
+    "unit": "W"
+  },
+  "common": {
+    "loading": "Loading data...",
+    "noData": "No data available",
+    "error": "Error occurred",
+    "refresh": "Refresh",
+    "history": "View History"
+  }
+}
