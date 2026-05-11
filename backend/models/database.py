@@ -26,8 +26,9 @@ class BMCRecord(Base):
 class HeatExchangerRecord(Base):
     __tablename__ = "heat_exchanger_records"
     id = Column(Integer, primary_key=True)
-    water_lpm = Column(Float)
-    oil_lpm = Column(Float)
+    pipe_temp = Column(Float)              # CWT-PT100S 클램프온 파이프 온도 (°C)
+    water_lpm = Column(Float)             # TUF-2000M 물 유량 (LPM)
+    oil_lpm = Column(Float)               # TUF-2000M 냉각유 유량 (LPM, 별도 설치 시)
     timestamp = Column(DateTime, server_default=func.now())
 
 class ImmersionTankRecord(Base):
