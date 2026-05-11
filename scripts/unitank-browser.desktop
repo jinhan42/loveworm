@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=UniTank Monitor
+Exec=/home/uniwide/loveworm/scripts/start-browser.sh
+X-GNOME-Autostart-enabled=true

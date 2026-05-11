@@ -1,15 +1,16 @@
 [Unit]
-Description=Loveworm Monitoring System
+Description=UniTank Monitoring System
 After=network.target
 
 [Service]
 Type=simple
-User=pi
-WorkingDirectory=/home/pi/loveworm
-ExecStart=/home/pi/loveworm/backend/venv/bin/uvicorn backend.main:app --host 0.0.0.0 --port 8000
+User=uniwide
+WorkingDirectory=/home/uniwide/loveworm
+ExecStart=/home/uniwide/loveworm/backend/venv/bin/uvicorn backend.main:app --host 0.0.0.0 --port 8000
 Restart=always
 RestartSec=5
-Environment=PYTHONPATH=/home/pi/loveworm
+Environment=PYTHONPATH=/home/uniwide/loveworm
+EnvironmentFile=/home/uniwide/loveworm/backend/.env
 
 [Install]
 WantedBy=multi-user.target
