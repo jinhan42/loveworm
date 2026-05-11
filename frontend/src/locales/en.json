@@ -8,10 +8,12 @@
   },
   "bmc": {
     "title": "Server BMC Monitoring",
-    "cpuTemp": "CPU Temperature",
-    "psuPower": "PSU Power",
-    "psuVoltage": "PSU Voltage",
-    "psuCurrent": "PSU Current",
+    "cpu0Status": "CPU 0 Status",
+    "cpu1Status": "CPU 1 Status",
+    "psu1Status": "PSU 1 Status",
+    "psu2Status": "PSU 2 Status",
+    "powerCapacity": "Max Power",
+    "accumulatedEnergy": "Accumulated Energy",
     "host": "Server IP",
     "lastUpdate": "Last Update"
   },

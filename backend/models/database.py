@@ -14,10 +14,13 @@ class BMCRecord(Base):
     __tablename__ = "bmc_records"
     id = Column(Integer, primary_key=True)
     host = Column(String, nullable=False)
-    cpu_temp = Column(Float)
-    psu_power = Column(Float)
-    psu_voltage = Column(Float)
-    psu_current = Column(Float)
+    cpu0_status = Column(String)           # OK / Error / Absent
+    cpu1_status = Column(String)
+    psu1_status = Column(String)           # OK / Error / Absent
+    psu2_status = Column(String)
+    power_capacity_watts = Column(Float)   # 최대 전력 용량
+    accumulated_energy_joules = Column(Float)  # 누적 에너지
+    power_consumed_watts = Column(Float)   # 현재 전력 (0이면 미지원)
     timestamp = Column(DateTime, server_default=func.now())
 
 class HeatExchangerRecord(Base):

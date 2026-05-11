@@ -1,6 +1,5 @@
 import asyncio
 import httpx
-from pyghmi.ipmi import command as ipmi_command
 from backend.config import settings
 from backend.models.database import AsyncSessionLocal, BMCRecord
 import logging
@@ -8,70 +7,76 @@ import logging
 logger = logging.getLogger(__name__)
 
 async def collect_via_redfish(host: str) -> dict:
-    url = f"https://{host}/redfish/v1/Chassis/1/Thermal"
+    base = f"https://{host}/redfish/v1/Chassis/Self"
     auth = (settings.BMC_USERNAME, settings.BMC_PASSWORD)
+    result = {}
     try:
         async with httpx.AsyncClient(verify=False, timeout=10) as client:
-            r = await client.get(url, auth=auth)
-            data = r.json()
-            temps = data.get("Temperatures", [])
-            cpu_temp = None
-            for t in temps:
-                if "CPU" in t.get("Name", ""):
-                    cpu_temp = t.get("ReadingCelsius")
-                    break
+            # 온도/팬 데이터 (액침냉각 서버는 대부분 Absent)
+            thermal_r = await client.get(f"{base}/Thermal", auth=auth)
+            thermal = thermal_r.json()
 
-        psu_url = f"https://{host}/redfish/v1/Chassis/1/Power"
+            # 전력 데이터
+            power_r = await client.get(f"{base}/Power", auth=auth)
+            power = power_r.json()
+
+            # PSU 상태
+            psus = power.get("PowerSupplies", [])
+            result["psu1_status"] = psus[0].get("Status", {}).get("Health", "Absent") if len(psus) > 0 else "Absent"
+            result["psu2_status"] = psus[1].get("Status", {}).get("Health", "Absent") if len(psus) > 1 else "Absent"
+
+            # PSU State가 Absent면 Absent로 표시
+            if len(psus) > 0 and psus[0].get("Status", {}).get("State") == "Absent":
+                result["psu1_status"] = "Absent"
+            if len(psus) > 1 and psus[1].get("Status", {}).get("State") == "Absent":
+                result["psu2_status"] = "Absent"
+
+            # 전력 제어 데이터
+            power_controls = power.get("PowerControl", [])
+            if power_controls:
+                pc = power_controls[0]
+                result["power_capacity_watts"] = pc.get("PowerCapacityWatts")
+                result["power_consumed_watts"] = pc.get("PowerConsumedWatts")
+                oem = pc.get("Oem", {}).get("Vendor", {})
+                result["accumulated_energy_joules"] = oem.get("PowerMetrics", {}).get("AccumulatedEnergyJoules")
+
+        # CPU 상태 (Systems 엔드포인트)
         async with httpx.AsyncClient(verify=False, timeout=10) as client:
-            r = await client.get(psu_url, auth=auth)
-            pdata = r.json()
-            psus = pdata.get("PowerSupplies", [])
-            psu_power = psus[0].get("PowerInputWatts") if psus else None
-            psu_voltage = psus[0].get("LineInputVoltage") if psus else None
+            cpu0_r = await client.get(f"https://{host}/redfish/v1/Systems/Self/Processors/CPU0", auth=auth)
+            cpu0 = cpu0_r.json()
+            result["cpu0_status"] = cpu0.get("Status", {}).get("Health", "Unknown")
 
-        return {"cpu_temp": cpu_temp, "psu_power": psu_power, "psu_voltage": psu_voltage, "psu_current": None}
+            cpu1_r = await client.get(f"https://{host}/redfish/v1/Systems/Self/Processors/CPU1", auth=auth)
+            cpu1 = cpu1_r.json()
+            result["cpu1_status"] = cpu1.get("Status", {}).get("Health", "Unknown")
+
     except Exception as e:
         logger.error(f"Redfish 오류 [{host}]: {e}")
-        return {}
 
-def collect_via_ipmi(host: str) -> dict:
-    try:
-        ipm = ipmi_command.Command(
-            bmc=host,
-            userid=settings.BMC_USERNAME,
-            password=settings.BMC_PASSWORD
-        )
-        sensors = ipm.get_sensor_data()
-        cpu_temp = None
-        psu_power = None
-        for s in sensors:
-            name = s.name.upper() if s.name else ""
-            if "CPU" in name and "TEMP" in name and cpu_temp is None:
-                cpu_temp = s.value
-            if "PSU" in name and "POWER" in name and psu_power is None:
-                psu_power = s.value
-        return {"cpu_temp": cpu_temp, "psu_power": psu_power, "psu_voltage": None, "psu_current": None}
-    except Exception as e:
-        logger.error(f"IPMI 오류 [{host}]: {e}")
-        return {}
+    return result
 
 async def collect_bmc():
     hosts = [h.strip() for h in settings.BMC_HOSTS.split(",")]
     async with AsyncSessionLocal() as session:
         for host in hosts:
+            data = {}
             if settings.BMC_USE_REDFISH:
                 data = await collect_via_redfish(host)
-            if not data:
-                data = await asyncio.to_thread(collect_via_ipmi, host)
 
             if data:
                 record = BMCRecord(
                     host=host,
-                    cpu_temp=data.get("cpu_temp"),
-                    psu_power=data.get("psu_power"),
-                    psu_voltage=data.get("psu_voltage"),
-                    psu_current=data.get("psu_current"),
+                    cpu0_status=data.get("cpu0_status", "Unknown"),
+                    cpu1_status=data.get("cpu1_status", "Unknown"),
+                    psu1_status=data.get("psu1_status", "Unknown"),
+                    psu2_status=data.get("psu2_status", "Unknown"),
+                    power_capacity_watts=data.get("power_capacity_watts"),
+                    accumulated_energy_joules=data.get("accumulated_energy_joules"),
+                    power_consumed_watts=data.get("power_consumed_watts"),
                 )
                 session.add(record)
+                logger.info(f"BMC [{host}] 수집 완료 - CPU0:{data.get('cpu0_status')} CPU1:{data.get('cpu1_status')}")
+            else:
+                logger.warning(f"BMC [{host}] 데이터 없음")
+
         await session.commit()
-    logger.info("BMC 수집 완료")

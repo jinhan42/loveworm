@@ -8,10 +8,12 @@
   },
   "bmc": {
     "title": "서버 BMC 모니터링",
-    "cpuTemp": "CPU 온도",
-    "psuPower": "PSU 전력",
-    "psuVoltage": "PSU 전압",
-    "psuCurrent": "PSU 전류",
+    "cpu0Status": "CPU 0 상태",
+    "cpu1Status": "CPU 1 상태",
+    "psu1Status": "PSU 1 상태",
+    "psu2Status": "PSU 2 상태",
+    "powerCapacity": "최대 전력",
+    "accumulatedEnergy": "누적 에너지",
     "host": "서버 IP",
     "lastUpdate": "최근 업데이트"
   },

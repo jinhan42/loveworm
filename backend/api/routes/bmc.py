@@ -14,10 +14,13 @@ async def get_latest_bmc(db: AsyncSession = Depends(get_db)):
     return [
         {
             "host": r.host,
-            "cpu_temp": r.cpu_temp,
-            "psu_power": r.psu_power,
-            "psu_voltage": r.psu_voltage,
-            "psu_current": r.psu_current,
+            "cpu0_status": r.cpu0_status,
+            "cpu1_status": r.cpu1_status,
+            "psu1_status": r.psu1_status,
+            "psu2_status": r.psu2_status,
+            "power_capacity_watts": r.power_capacity_watts,
+            "accumulated_energy_joules": r.accumulated_energy_joules,
+            "power_consumed_watts": r.power_consumed_watts,
             "timestamp": r.timestamp,
         }
         for r in records
@@ -34,8 +37,11 @@ async def get_bmc_history(host: str, limit: int = 100, db: AsyncSession = Depend
     records = result.scalars().all()
     return [
         {
-            "cpu_temp": r.cpu_temp,
-            "psu_power": r.psu_power,
+            "cpu0_status": r.cpu0_status,
+            "cpu1_status": r.cpu1_status,
+            "psu1_status": r.psu1_status,
+            "psu2_status": r.psu2_status,
+            "power_consumed_watts": r.power_consumed_watts,
             "timestamp": r.timestamp,
         }
         for r in records
