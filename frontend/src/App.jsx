@@ -26,7 +26,7 @@ function App() {
         {/* 헤더 */}
         <header className="bg-gray-800 px-4 py-3 flex items-center justify-between shadow-lg">
           <div className="flex items-center gap-2">
-            <span className="text-green-400 text-xl font-bold">Loveworm</span>
+            <span className="text-green-400 text-xl font-bold">UniTank</span>
             <span className="text-gray-400 text-sm">모니터링 시스템</span>
           </div>
           <button

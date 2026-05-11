@@ -18,7 +18,7 @@ async def lifespan(app: FastAPI):
     yield
     stop_scheduler()
 
-app = FastAPI(title="Loveworm 모니터링 시스템", lifespan=lifespan)
+app = FastAPI(title="UniTank 모니터링 시스템", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
