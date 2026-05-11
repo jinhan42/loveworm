@@ -1,5 +1,8 @@
 from pydantic_settings import BaseSettings
 from typing import Optional
+from pathlib import Path
+
+ENV_FILE = Path(__file__).parent / ".env"
 
 class Settings(BaseSettings):
     # Database
@@ -37,6 +40,6 @@ class Settings(BaseSettings):
     COLLECT_INTERVAL_PDU: int = 30
 
     class Config:
-        env_file = ".env"
+        env_file = str(ENV_FILE)
 
 settings = Settings()
