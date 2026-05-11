@@ -27,7 +27,9 @@
     "title": "Immersion Tank Monitoring",
     "tempUpper": "Upper Temperature",
     "tempLower": "Lower Temperature",
-    "oilFlow": "Oil Flow Rate",
+    "flowUpper": "Inlet Flow (Upper)",
+    "flowLower": "Outlet Flow (Lower)",
+    "oilType": "Coolant: GS Fluid S 30",
     "unitTemp": "°C",
     "unitFlow": "LPM"
   },

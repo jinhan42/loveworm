@@ -34,9 +34,10 @@ class HeatExchangerRecord(Base):
 class ImmersionTankRecord(Base):
     __tablename__ = "immersion_tank_records"
     id = Column(Integer, primary_key=True)
-    temp_upper = Column(Float)
-    temp_lower = Column(Float)
-    oil_flow = Column(Float)
+    temp_upper = Column(Float)        # 상층 온도 (°C) - CWT-PT100S
+    temp_lower = Column(Float)        # 하층 온도 (°C) - CWT-PT100S
+    flow_upper = Column(Float)        # 상부 냉각유 유량 (LPM) - 입구, TUF-2000M
+    flow_lower = Column(Float)        # 하부 냉각유 유량 (LPM) - 출구, TUF-2000M
     timestamp = Column(DateTime, server_default=func.now())
 
 class PDURecord(Base):

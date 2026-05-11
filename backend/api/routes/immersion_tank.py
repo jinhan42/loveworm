@@ -14,10 +14,11 @@ async def get_latest(db: AsyncSession = Depends(get_db)):
     if not record:
         return {}
     return {
-        "temp_upper": record.temp_upper,
-        "temp_lower": record.temp_lower,
-        "oil_flow": record.oil_flow,
-        "timestamp": record.timestamp
+        "temp_upper":  record.temp_upper,
+        "temp_lower":  record.temp_lower,
+        "flow_upper":  record.flow_upper,
+        "flow_lower":  record.flow_lower,
+        "timestamp":   record.timestamp
     }
 
 @router.get("/history")
@@ -27,6 +28,12 @@ async def get_history(limit: int = 100, db: AsyncSession = Depends(get_db)):
     )
     records = result.scalars().all()
     return [
-        {"temp_upper": r.temp_upper, "temp_lower": r.temp_lower, "oil_flow": r.oil_flow, "timestamp": r.timestamp}
+        {
+            "temp_upper": r.temp_upper,
+            "temp_lower": r.temp_lower,
+            "flow_upper": r.flow_upper,
+            "flow_lower": r.flow_lower,
+            "timestamp":  r.timestamp
+        }
         for r in records
     ]

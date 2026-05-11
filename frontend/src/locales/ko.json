@@ -27,7 +27,9 @@
     "title": "이머전 탱크 모니터링",
     "tempUpper": "상층 온도",
     "tempLower": "하층 온도",
-    "oilFlow": "냉각유 흐름",
+    "flowUpper": "입구 유량 (상부)",
+    "flowLower": "출구 유량 (하부)",
+    "oilType": "냉각유: GS Fluid S 30",
     "unitTemp": "°C",
     "unitFlow": "LPM"
   },
