@@ -18,7 +18,7 @@ for i in $(seq 1 30); do
 done
 
 # Chromium 키오스크 모드 실행
-chromium-browser \
+chromium \
     --kiosk \
     --noerrdialogs \
     --disable-infobars \
@@ -29,4 +29,8 @@ chromium-browser \
     --disable-features=TranslateUI \
     --touch-events=enabled \
     --incognito \
+    --password-store=basic \
+    --use-mock-keychain \
+    --disable-session-crashed-bubble \
+    --disable-component-update \
     http://localhost:8000
