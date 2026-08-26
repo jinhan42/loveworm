@@ -35,9 +35,18 @@
   },
   "pdu": {
     "title": "PDU 전력 모니터링",
-    "totalPower": "전체 전력",
-    "outlet": "아울렛",
-    "unit": "W"
+    "connected": "대 연결됨",
+    "serverTotal": "서버 사용 전력",
+    "tankCduTotal": "TANK + CDU 사용 전력",
+    "grandTotal": "전체 사용 전력",
+    "powerByUnit": "PDU별 전력량",
+    "voltage": "전압",
+    "current": "전류",
+    "power": "전력",
+    "loadRate": "부하율",
+    "normalOn": "정상 ON",
+    "alarm": "알람 발생",
+    "offline": "오프라인"
   },
   "common": {
     "loading": "데이터 로딩 중...",

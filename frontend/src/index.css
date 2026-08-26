@@ -6,6 +6,9 @@
   .card {
     @apply bg-gray-800 rounded-xl p-4 shadow-md;
   }
+  .summary-card {
+    @apply border border-blue-900;
+  }
 }
 
 * {

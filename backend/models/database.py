@@ -43,8 +43,19 @@ class ImmersionTankRecord(Base):
 class PDURecord(Base):
     __tablename__ = "pdu_records"
     id = Column(Integer, primary_key=True)
-    total_power = Column(Float)
-    outlet_data = Column(String)   # JSON 문자열
+    unit = Column(String)          # "PDU-1" / "PDU-2" / "PDU-3"
+    voltage = Column(Float)        # AC 전압 (V)
+    current = Column(Float)        # AC 전류 (A)
+    power_factor = Column(Float)   # 역률 (미사용)
+    total_power = Column(Float)    # 전력 (W)
+    load_rate = Column(Float)      # 부하율 (%) = 전류 / 정격전류(20A) * 100
+    temp1 = Column(Float)          # 온도1 (°C, 미사용)
+    temp2 = Column(Float)          # 온도2 (°C, 미사용)
+    temp3_door = Column(Float)     # 온도3/도어센서 (미사용)
+    humidity = Column(Float)       # 습도 (미사용)
+    kwh = Column(Float)            # 누적 전력량 (kWh)
+    alarm = Column(Integer)        # 알람 상태
+    outlet_data = Column(String)   # JSON 문자열 (DEFOG PDU는 아울렛별 계측 미지원 - 미사용)
     timestamp = Column(DateTime, server_default=func.now())
 
 async def init_db():

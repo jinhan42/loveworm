@@ -35,9 +35,18 @@
   },
   "pdu": {
     "title": "PDU Power Monitoring",
-    "totalPower": "Total Power",
-    "outlet": "Outlet",
-    "unit": "W"
+    "connected": "connected",
+    "serverTotal": "Server Power Usage",
+    "tankCduTotal": "TANK + CDU Power",
+    "grandTotal": "Total Power Usage",
+    "powerByUnit": "Power by PDU",
+    "voltage": "Voltage",
+    "current": "Current",
+    "power": "Power",
+    "loadRate": "Load Rate",
+    "normalOn": "Normal ON",
+    "alarm": "Alarm",
+    "offline": "Offline"
   },
   "common": {
     "loading": "Loading data...",
