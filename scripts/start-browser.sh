@@ -29,4 +29,8 @@ chromium \
     --disable-features=TranslateUI,Translate \
     --touch-events=enabled \
     --incognito \
+    --password-store=basic \
+    --use-mock-keychain \
+    --disable-session-crashed-bubble \
+    --disable-component-update \
     http://localhost:8000
